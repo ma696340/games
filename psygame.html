@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Neucha&display=swap" rel="stylesheet">
+<html>
+<head>
+	<title>Psychic Game</title>
+</head>
+
+<body>
+<div class="game-info">
+	<h1 align="center">What letter I'm thinking of?</h1>
+	<h3 align="center" id="wins">Wins </h3>
+	<h3 align="center" id="losses">Losses </h3>
+	<h3 align="center" id="guessesRemaining">Guesses Left </h3>
+	<h3 align="center" id="guessesSoFar">Guesses So Far</h3>
+</div>
+
+
+<script type="text/javascript">
+	    var wins = document.getElementById("wins");
+	    var losses = document.getElementById("losses");
+	    var guessesRemaining = document.getElementById("guessesRemaining");
+	    var guessesSoFar = document.getElementById("guessesSoFar");
+	    var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+	    var winCount = 0;
+	    var lossCount = 0;
+	    var titleGuessesRemaining = 9;
+	    var guessesRemainingCount = titleGuessesRemaining;
+	    var guessarr = [];
+	    var getLetter = function () {
+		randomLetter = letters[Math.floor(Math.random()*letters.length)]
+		console.log(randomLetter);
+		return randomLetter
+	};	
+	var display = function () {
+		wins.innerHTML = "Wins " + winCount
+		losses.innerHTML = "Losses " + lossCount
+		guessesRemaining.innerHTML = "Guesses Left " + guessesRemainingCount
+		guessesSoFar.innerHTML = "Guesses So Far " + guessarr
+	};
+	var resetGame = function () {
+		guessesArray = [];
+		guessesRemainingCount = titleGuessesRemaining;
+		currentLetter = getLetter();
+	};
+	var userWon = function (userLetter) {
+		return userLetter === currentLetter 
+	};
+	var userLost = function () {
+		return guessesRemainingCount === 0;
+	};
+	var currentLetter = getLetter();
+	display();
+	document.onkeyup = function (event) {
+		var userLetter = event.key;
+		guessesRemainingCount--
+		guessarr.push(userLetter)
+		if (userWon(userLetter)) {
+			winCount++;
+			resetGame();
+		}; 
+		if (userLost()) {
+			lossCount++;
+			resetGame();
+		};
+		display();
+	};
+</script>
+
+</body>
+</html>
